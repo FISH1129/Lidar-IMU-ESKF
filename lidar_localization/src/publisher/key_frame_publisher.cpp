@@ -20,11 +20,7 @@ KeyFramePublisher::KeyFramePublisher(ros::NodeHandle& nh,
 void KeyFramePublisher::Publish(KeyFrame& key_frame) {
     geometry_msgs::PoseWithCovarianceStamped pose_stamped;
 
-<<<<<<< HEAD
     ros::Time ros_time((float)key_frame.time);
-=======
-    ros::Time ros_time(key_frame.time);
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     pose_stamped.header.stamp = ros_time;
     pose_stamped.header.frame_id = frame_id_;
 

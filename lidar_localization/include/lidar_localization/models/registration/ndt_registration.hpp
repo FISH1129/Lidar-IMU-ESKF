@@ -26,11 +26,7 @@ class NDTRegistration: public RegistrationInterface {
     bool SetRegistrationParam(float res, float step_size, float trans_eps, int max_iter);
 
   private:
-<<<<<<< HEAD
     pcl::NormalDistributionsTransform<CloudData::POINT,CloudData::POINT>::Ptr ndt_ptr_;
-=======
-    pcl::NormalDistributionsTransform<CloudData::POINT, CloudData::POINT>::Ptr ndt_ptr_;
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 };
 }
 

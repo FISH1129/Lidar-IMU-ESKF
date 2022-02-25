@@ -9,7 +9,6 @@
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 
-<<<<<<< HEAD
 struct VelodynePointXYZILW
 {
     PCL_ADD_POINT4D
@@ -36,21 +35,11 @@ class CloudData {
     // using POINT = pcl::PointXYZI;
     //using POINT = VelodynePointXYZILW;
     using POINT = pcl::PointXYZI;
-=======
-namespace lidar_localization {
-class CloudData {
-  public:
-    using POINT = pcl::PointXYZ;
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     using CLOUD = pcl::PointCloud<POINT>;
     using CLOUD_PTR = CLOUD::Ptr;
 
   public:
-<<<<<<< HEAD
     CloudData() //构造函数
-=======
-    CloudData()
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
       :cloud_ptr(new CLOUD()) {
     }
 

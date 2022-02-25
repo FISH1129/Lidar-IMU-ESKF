@@ -21,11 +21,7 @@ LoopPosePublisher::LoopPosePublisher(ros::NodeHandle& nh,
 void LoopPosePublisher::Publish(LoopPose& loop_pose) {
     geometry_msgs::PoseWithCovarianceStamped pose_stamped;
 
-<<<<<<< HEAD
     ros::Time ros_time((float)loop_pose.time);
-=======
-    ros::Time ros_time(loop_pose.time);
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     pose_stamped.header.stamp = ros_time;
     pose_stamped.header.frame_id = frame_id_;
 

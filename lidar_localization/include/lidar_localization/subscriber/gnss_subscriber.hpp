@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * @Description:
-=======
- * @Description: 
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
  * @Author: Ren Qian
  * @Date: 2019-03-31 12:58:10
  */
@@ -19,15 +15,10 @@
 
 #include "lidar_localization/sensor_data/gnss_data.hpp"
 
-<<<<<<< HEAD
 namespace lidar_localization
 {
 class GNSSSubscriber
 {
-=======
-namespace lidar_localization {
-class GNSSSubscriber {
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   public:
     GNSSSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size);
     GNSSSubscriber() = default;
@@ -42,10 +33,6 @@ class GNSSSubscriber {
     std::deque<GNSSData> new_gnss_data_;
 
     std::mutex buff_mutex_;
-<<<<<<< HEAD
   };
-=======
-};
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 }
 #endif

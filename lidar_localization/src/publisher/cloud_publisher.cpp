@@ -1,10 +1,5 @@
 /*
  * @Description: 通过ros发布点云
-<<<<<<< HEAD
-=======
- * @Author: Ren Qian
- * @Date: 2020-02-05 02:27:30
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
  */
 
 #include "lidar_localization/publisher/cloud_publisher.hpp"
@@ -20,10 +15,7 @@ CloudPublisher::CloudPublisher(ros::NodeHandle& nh,
 }
 
 void CloudPublisher::Publish(CloudData::CLOUD_PTR&  cloud_ptr_input, double time) {
-<<<<<<< HEAD
     // ros::Time ros_time((float)time);
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     ros::Time ros_time(time);
     PublishData(cloud_ptr_input, ros_time);
 }
@@ -45,8 +37,4 @@ void CloudPublisher::PublishData(CloudData::CLOUD_PTR&  cloud_ptr_input, ros::Ti
 bool CloudPublisher::HasSubscribers() {
     return publisher_.getNumSubscribers() != 0;
 }
-<<<<<<< HEAD
 }
-=======
-} // namespace lidar_localization
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3

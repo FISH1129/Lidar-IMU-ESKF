@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-=======
-/*
- * @Description: synced PosVelData publisher
- * @Author: Ge Yao
- * @Date: 2020-11-21 15:39:24
- */
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include "lidar_localization/publisher/pos_vel_publisher.hpp"
 
 namespace lidar_localization {

@@ -38,7 +38,3 @@ endif()
 
 include_directories(${GLOG_INCLUDE_DIRS})
 list(APPEND ALL_TARGET_LIBRARIES ${GLOG_LIBRARIES})
-<<<<<<< HEAD
-=======
-list(APPEND ALL_TARGET_LIBRARIES ${GLOG_LIBRARIES} libgflags.a libglog.a)
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3

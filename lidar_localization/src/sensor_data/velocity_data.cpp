@@ -52,7 +52,6 @@ bool VelocityData::SyncData(std::deque<VelocityData>& UnsyncedData, std::deque<V
 }
 
 void VelocityData::TransformCoordinate(Eigen::Matrix4f transform_matrix) {
-<<<<<<< HEAD
     // Eigen::Matrix4d matrix = transform_matrix.cast<double>();
 
     // Eigen::Matrix3d t_R = matrix.block<3,3>(0,0);
@@ -77,8 +76,6 @@ void VelocityData::TransformCoordinate(Eigen::Matrix4f transform_matrix) {
     // linear_velocity.z = v(2);
 
     // ESKF
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     Eigen::Matrix4d matrix = transform_matrix.cast<double>();
 
     Eigen::Matrix3d R = matrix.block<3,3>(0,0);
@@ -107,30 +104,4 @@ void VelocityData::TransformCoordinate(Eigen::Matrix4f transform_matrix) {
     linear_velocity.y = v(1);
     linear_velocity.z = v(2);
 }
-<<<<<<< HEAD
-=======
-
-void VelocityData::NED2ENU(void) {
-    LinearVelocity linear_velocity_enu;
-
-    linear_velocity_enu.x = +linear_velocity.y;
-    linear_velocity_enu.y = +linear_velocity.x;
-    linear_velocity_enu.z = -linear_velocity.z;
-
-    linear_velocity.x = linear_velocity_enu.x;
-    linear_velocity.y = linear_velocity_enu.y;
-    linear_velocity.z = linear_velocity_enu.z;
-
-    AngularVelocity angular_velocity_enu;
-
-    angular_velocity_enu.x = +angular_velocity.y;
-    angular_velocity_enu.y = +angular_velocity.x;
-    angular_velocity_enu.z = -angular_velocity.z;
-
-    angular_velocity.x = angular_velocity_enu.x;
-    angular_velocity.y = angular_velocity_enu.y;
-    angular_velocity.z = angular_velocity_enu.z;
-}
-
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 }

@@ -14,11 +14,6 @@ IMUSubscriber::IMUSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t
 
 void IMUSubscriber::msg_callback(const sensor_msgs::ImuConstPtr& imu_msg_ptr) {
     buff_mutex_.lock();
-<<<<<<< HEAD
-=======
-
-    // convert ROS IMU to GeographicLib compatible GNSS message:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     IMUData imu_data;
     imu_data.time = imu_msg_ptr->header.stamp.toSec();
 
@@ -34,33 +29,17 @@ void IMUSubscriber::msg_callback(const sensor_msgs::ImuConstPtr& imu_msg_ptr) {
     imu_data.orientation.y = imu_msg_ptr->orientation.y;
     imu_data.orientation.z = imu_msg_ptr->orientation.z;
     imu_data.orientation.w = imu_msg_ptr->orientation.w;
-<<<<<<< HEAD
 
     new_imu_data_.push_back(imu_data);
-=======
-    
-    // add new message to buffer:
-    new_imu_data_.push_back(imu_data);
-    
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     buff_mutex_.unlock();
 }
 
 void IMUSubscriber::ParseData(std::deque<IMUData>& imu_data_buff) {
     buff_mutex_.lock();
-<<<<<<< HEAD
-=======
-
-    // pipe all available measurements to output buffer:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     if (new_imu_data_.size() > 0) {
         imu_data_buff.insert(imu_data_buff.end(), new_imu_data_.begin(), new_imu_data_.end());
         new_imu_data_.clear();
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     buff_mutex_.unlock();
 }
 }

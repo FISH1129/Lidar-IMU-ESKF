@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-=======
-/*
- * @Description: synced PosVelData publisher
- * @Author: Ge Yao
- * @Date: 2020-11-21 15:39:24
- */
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #ifndef LIDAR_LOCALIZATION_PUBLISHER_POS_VEL_PUBLISHER_HPP_
 #define LIDAR_LOCALIZATION_PUBLISHER_POS_VEL_PUBLISHER_HPP_
 

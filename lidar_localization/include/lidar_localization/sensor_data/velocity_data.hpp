@@ -31,10 +31,6 @@ class VelocityData {
   public:
     static bool SyncData(std::deque<VelocityData>& UnsyncedData, std::deque<VelocityData>& SyncedData, double sync_time);
     void TransformCoordinate(Eigen::Matrix4f transform_matrix);
-<<<<<<< HEAD
-=======
-    void NED2ENU(void);
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 };
 }
 #endif

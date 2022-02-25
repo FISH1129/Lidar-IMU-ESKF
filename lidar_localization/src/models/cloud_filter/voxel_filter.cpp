@@ -24,11 +24,7 @@ VoxelFilter::VoxelFilter(float leaf_size_x, float leaf_size_y, float leaf_size_z
 bool VoxelFilter::SetFilterParam(float leaf_size_x, float leaf_size_y, float leaf_size_z) {
     voxel_filter_.setLeafSize(leaf_size_x, leaf_size_y, leaf_size_z);
 
-<<<<<<< HEAD
     std::cout << "Voxel Filter 的参数为：" << std::endl
-=======
-    std::cout << "Voxel Filter params:" << std::endl
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
               << leaf_size_x << ", "
               << leaf_size_y << ", "
               << leaf_size_z 

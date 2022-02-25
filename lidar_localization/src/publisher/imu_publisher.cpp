@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
- * @Description: 通过ros发布点云
- * @Author: Ren Qian
- * @Date: 2020-02-05 02:27:30
- */
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include "lidar_localization/publisher/imu_publisher.hpp"
 #include "glog/logging.h"
 

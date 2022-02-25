@@ -9,17 +9,11 @@
 #include "glog/logging.h"
 
 namespace lidar_localization {
-<<<<<<< HEAD
 Eigen::Matrix3f IMUData::GetOrientationMatrix() const{
     Eigen::Quaterniond q(orientation.w, orientation.x, orientation.y, orientation.z);
     Eigen::Matrix3f matrix = q.matrix().cast<float>();
 
     return matrix;
-=======
-Eigen::Matrix3f IMUData::GetOrientationMatrix() const {
-    Eigen::Quaterniond q(orientation.w, orientation.x, orientation.y, orientation.z);
-    return q.matrix().cast<float>();
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 }
 
 bool IMUData::SyncData(std::deque<IMUData>& UnsyncedData, std::deque<IMUData>& SyncedData, double sync_time) {
@@ -27,33 +21,17 @@ bool IMUData::SyncData(std::deque<IMUData>& UnsyncedData, std::deque<IMUData>& S
     // 即找到与同步时间相邻的左右两个数据
     // 需要注意的是，如果左右相邻数据有一个离同步时间差值比较大，则说明数据有丢失，时间离得太远不适合做差值
     while (UnsyncedData.size() >= 2) {
-<<<<<<< HEAD
         if (UnsyncedData.front().time > sync_time) 
             return false;
-=======
-        // UnsyncedData.front().time should be <= sync_time:
-        if (UnsyncedData.front().time > sync_time) 
-            return false;
-        // sync_time should be <= UnsyncedData.at(1).time:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
         if (UnsyncedData.at(1).time < sync_time) {
             UnsyncedData.pop_front();
             continue;
         }
-<<<<<<< HEAD
-=======
-
-        // sync_time - UnsyncedData.front().time should be <= 0.2:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
         if (sync_time - UnsyncedData.front().time > 0.2) {
             UnsyncedData.pop_front();
             return false;
         }
-<<<<<<< HEAD
         
-=======
-        // UnsyncedData.at(1).time - sync_time should be <= 0.2
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
         if (UnsyncedData.at(1).time - sync_time > 0.2) {
             UnsyncedData.pop_front();
             return false;

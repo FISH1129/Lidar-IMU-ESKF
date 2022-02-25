@@ -17,19 +17,11 @@ void OdometrySubscriber::msg_callback(const nav_msgs::OdometryConstPtr& odom_msg
     PoseData pose_data;
     pose_data.time = odom_msg_ptr->header.stamp.toSec();
 
-<<<<<<< HEAD
     //set the position
-=======
-    // set the position:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     pose_data.pose(0,3) = odom_msg_ptr->pose.pose.position.x;
     pose_data.pose(1,3) = odom_msg_ptr->pose.pose.position.y;
     pose_data.pose(2,3) = odom_msg_ptr->pose.pose.position.z;
 
-<<<<<<< HEAD
-=======
-    // set the orientation:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     Eigen::Quaternionf q;
     q.x() = odom_msg_ptr->pose.pose.orientation.x;
     q.y() = odom_msg_ptr->pose.pose.orientation.y;
@@ -43,10 +35,6 @@ void OdometrySubscriber::msg_callback(const nav_msgs::OdometryConstPtr& odom_msg
     pose_data.vel.z() = odom_msg_ptr->twist.twist.linear.z;
 
     new_pose_data_.push_back(pose_data);
-<<<<<<< HEAD
-=======
-    
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     buff_mutex_.unlock();
 }
 
