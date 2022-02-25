@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/fbb/SLAM/myslam/MNDT_ground_cluster_4.2_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/fbb/SLAM/myslam/MNDT_ground_cluster_4.2_ws/src/A-LOAM-devel/include",
+                "/home/fbb/SLAM/myslam/MNDT_ground_cluster_4.2_ws/src/lidar_localization/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

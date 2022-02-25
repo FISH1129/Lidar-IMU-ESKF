@@ -1,0 +1,57 @@
+/*
+ * @Description: 订阅激光点云信息，并解析数据
+ * @Author: Ren Qian
+ * @Date: 2020-02-05 02:27:30
+ */
+
+#include "lidar_localization/subscriber/cloud_subscriber.hpp"
+
+#include "glog/logging.h"
+
+namespace lidar_localization {
+CloudSubscriber::CloudSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size)
+    :nh_(nh) {
+    subscriber_ = nh_.subscribe(topic_name, buff_size, &CloudSubscriber::msg_callback, this);
+}
+
+void CloudSubscriber::msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr) {
+    buff_mutex_.lock();
+<<<<<<< HEAD
+    CloudData cloud_data;
+    cloud_data.time = cloud_msg_ptr->header.stamp.toSec();
+    pcl::fromROSMsg(*cloud_msg_ptr, *(cloud_data.cloud_ptr));
+
+    // std::cout << "订阅处原始帧" << cloud_data.cloud_ptr->points.size() <<std::endl;
+
+    new_cloud_data_.push_back(cloud_data);
+=======
+
+    // convert ROS PointCloud2 to pcl::PointCloud<pcl::PointXYZ>:
+    CloudData cloud_data;
+    cloud_data.time = cloud_msg_ptr->header.stamp.toSec();
+    pcl::fromROSMsg(*cloud_msg_ptr, *(cloud_data.cloud_ptr));
+    // add new message to buffer:
+    new_cloud_data_.push_back(cloud_data);
+
+>>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
+    buff_mutex_.unlock();
+}
+
+void CloudSubscriber::ParseData(std::deque<CloudData>& cloud_data_buff) {
+    buff_mutex_.lock();
+<<<<<<< HEAD
+=======
+
+    // pipe all available measurements to output buffer:
+>>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
+    if (new_cloud_data_.size() > 0) {
+        cloud_data_buff.insert(cloud_data_buff.end(), new_cloud_data_.begin(), new_cloud_data_.end());
+        new_cloud_data_.clear();
+    }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
+    buff_mutex_.unlock();
+}
+} // namespace data_input
