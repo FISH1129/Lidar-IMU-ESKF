@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
- * @Description: Kalman Filter interface.
- * @Author: Ge Yao
- * @Date: 2020-11-12 15:14:07
- */
-
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #ifndef LIDAR_LOCALIZATION_MODELS_KALMAN_FILTER_KALMAN_FILTER_HPP_
 #define LIDAR_LOCALIZATION_MODELS_KALMAN_FILTER_KALMAN_FILTER_HPP_
 

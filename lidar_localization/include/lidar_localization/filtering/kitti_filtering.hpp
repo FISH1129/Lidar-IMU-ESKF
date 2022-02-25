@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
- * @Description: IMU-lidar fusion for localization workflow
- * @Author: Ge Yao
- * @Date: 2020-11-12 15:14:07
- */
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #ifndef LIDAR_LOCALIZATION_FILTERING_KITTI_FILTERING_HPP_
 #define LIDAR_LOCALIZATION_FILTERING_KITTI_FILTERING_HPP_
 
@@ -18,21 +10,12 @@
 #include "lidar_localization/sensor_data/cloud_data.hpp"
 #include "lidar_localization/sensor_data/imu_data.hpp"
 #include "lidar_localization/sensor_data/pos_vel_data.hpp"
-<<<<<<< HEAD
 #include "lidar_localization/sensor_data/gnss_data.hpp"
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include "lidar_localization/sensor_data/pose_data.hpp"
 
 #include "lidar_localization/models/cloud_filter/box_filter.hpp"
 #include "lidar_localization/models/cloud_filter/cloud_filter_interface.hpp"
-<<<<<<< HEAD
 // #include "lidar_localization/models/scan_context_manager/scan_context_manager.hpp"
-=======
-
-#include "lidar_localization/models/scan_context_manager/scan_context_manager.hpp"
-
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include "lidar_localization/models/registration/registration_interface.hpp"
 
 #include "lidar_localization/models/kalman_filter/kalman_filter.hpp"
@@ -41,15 +24,12 @@ namespace lidar_localization {
 
 class KITTIFiltering {
 public:
-<<<<<<< HEAD
     struct Frame{
         Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
         CloudData cloud_data;
     };
 
 public:
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   KITTIFiltering();
 
   bool Init(const CloudData &init_scan, const Eigen::Vector3f &init_vel,
@@ -64,19 +44,11 @@ public:
 
   // getters:
   bool HasInited() const { return has_inited_; }
-<<<<<<< HEAD
   // bool HasNewGlobalMap() const { return has_new_global_map_; }
   // bool HasNewLocalMap() const { return has_new_local_map_; }
 
   // void GetGlobalMap(CloudData::CLOUD_PTR &global_map);
   // CloudData::CLOUD_PTR &GetLocalMap() { return local_map_ptr_; }
-=======
-  bool HasNewGlobalMap() const { return has_new_global_map_; }
-  bool HasNewLocalMap() const { return has_new_local_map_; }
-
-  void GetGlobalMap(CloudData::CLOUD_PTR &global_map);
-  CloudData::CLOUD_PTR &GetLocalMap() { return local_map_ptr_; }
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   CloudData::CLOUD_PTR &GetCurrentScan() { return current_scan_ptr_; }
 
   double GetTime(void) { return kalman_filter_ptr_->GetTime(); }
@@ -90,10 +62,7 @@ private:
   bool InitFilter(std::string filter_user,
                   std::shared_ptr<CloudFilterInterface> &filter_ptr,
                   const YAML::Node &config_node);
-<<<<<<< HEAD
   bool InitParam(const YAML::Node& config_node);
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   bool InitLocalMapSegmenter(const YAML::Node &config_node);
   bool InitFilters(const YAML::Node &config_node);
   // b. map initializer:
@@ -115,7 +84,6 @@ private:
   bool SetInitGNSS(const Eigen::Matrix4f &init_pose);
   bool SetInitPose(const Eigen::Matrix4f &init_pose);
 
-<<<<<<< HEAD
   bool UpdateWithNewFrame(const Frame& new_key_frame);
 
 private:
@@ -135,26 +103,6 @@ private:
   // std::shared_ptr<ScanContextManager> scan_context_manager_ptr_;
   // frontend:
   // std::shared_ptr<RegistrationInterface> registration_ptr_;
-=======
-private:
-  std::string map_path_ = "";
-  std::string scan_context_path_ = "";
-
-  std::string loop_closure_method_ = "";
-
-  // a. global map:
-  std::shared_ptr<CloudFilterInterface> global_map_filter_ptr_;
-  // b. local map:
-  std::shared_ptr<BoxFilter> local_map_segmenter_ptr_;
-  std::shared_ptr<CloudFilterInterface> local_map_filter_ptr_;
-  // c. current scan:
-  std::shared_ptr<CloudFilterInterface> current_scan_filter_ptr_;
-
-  // scan context manager:
-  std::shared_ptr<ScanContextManager> scan_context_manager_ptr_;
-  // frontend:
-  std::shared_ptr<RegistrationInterface> registration_ptr_;
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   // IMU-lidar Kalman filter:
   struct {
     std::string FUSION_METHOD;
@@ -167,25 +115,16 @@ private:
   KalmanFilter::Measurement current_measurement_;
 
   CloudData::CLOUD_PTR global_map_ptr_;
-<<<<<<< HEAD
   // CloudData::CLOUD_PTR local_map_ptr_;
   CloudData::CLOUD_PTR current_scan_ptr_;
 
   Eigen::Matrix4f current_gnss_pose_ = Eigen::Matrix4f::Identity();
   // Eigen::Matrix4f init_pose_ = Eigen::Matrix4f::Identity();
-=======
-  CloudData::CLOUD_PTR local_map_ptr_;
-  CloudData::CLOUD_PTR current_scan_ptr_;
-
-  Eigen::Matrix4f current_gnss_pose_ = Eigen::Matrix4f::Identity();
-  Eigen::Matrix4f init_pose_ = Eigen::Matrix4f::Identity();
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   Eigen::Matrix4f current_pose_ = Eigen::Matrix4f::Identity();
   Eigen::Vector3f current_vel_ = Eigen::Vector3f::Zero();
 
   bool has_inited_ = false;
   bool has_new_global_map_ = false;
-<<<<<<< HEAD
   // bool has_new_local_map_ = false;
  
   // new add
@@ -201,9 +140,6 @@ private:
 
   float key_frame_distance_ = 2.0;
   int local_frame_num_ = 20;
-=======
-  bool has_new_local_map_ = false;
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 };
 
 } // namespace lidar_localization

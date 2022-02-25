@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
- * @Description: Error-State Kalman Filter for IMU-Lidar-GNSS-Odo fusion
- * @Author: Ge Yao
- * @Date: 2020-11-12 15:14:07
- */
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include <cstdlib>
 #include <limits>
 
@@ -14,7 +6,6 @@
 #include <iostream>
 #include <ostream>
 
-<<<<<<< HEAD
 #include <sophus/so3.hpp>
 #include "lidar_localization/models/kalman_filter/error_state_kalman_filter.hpp"
 
@@ -109,111 +100,6 @@ ErrorStateKalmanFilter::ErrorStateKalmanFilter(const YAML::Node &node){
 
     // init soms:
     QPose_.block<kDimMeasurementPose, kDimState>(0, 0) = GPose_;
-=======
-// use sophus to handle so3 hat & SO3 log operations:
-#include <sophus/so3.hpp>
-
-#include "lidar_localization/models/kalman_filter/error_state_kalman_filter.hpp"
-
-#include "lidar_localization/global_defination/global_defination.h"
-
-#include "glog/logging.h"
-
-namespace lidar_localization {
-
-ErrorStateKalmanFilter::ErrorStateKalmanFilter(const YAML::Node &node) {                //  读取 ESKF yamlS参数
-  //
-  // parse config:
-  //
-  // a. earth constants:        地球约束
-  EARTH.GRAVITY_MAGNITUDE = node["earth"]["gravity_magnitude"].as<double>();
-  EARTH.LATITUDE = node["earth"]["latitude"].as<double>();            //  altitude  纬度
-  EARTH.LATITUDE *= M_PI / 180.0;
-
-  // b. prior state covariance:     先验方差
-  COV.PRIOR.POSI = node["covariance"]["prior"]["pos"].as<double>();
-  COV.PRIOR.VEL = node["covariance"]["prior"]["vel"].as<double>();
-  COV.PRIOR.ORI = node["covariance"]["prior"]["ori"].as<double>();
-  COV.PRIOR.EPSILON = node["covariance"]["prior"]["epsilon"].as<double>();                    //   bias_accel 随机游走
-  COV.PRIOR.DELTA = node["covariance"]["prior"]["delta"].as<double>();                              //   bias_gyro  随机游走
-
-  // c. process noise:                      过程噪声(器件噪声)
-  COV.PROCESS.ACCEL = node["covariance"]["process"]["accel"].as<double>();
-  COV.PROCESS.GYRO = node["covariance"]["process"]["gyro"].as<double>();
-  COV.PROCESS.BIAS_ACCEL =
-      node["covariance"]["process"]["bias_accel"].as<double>();
-  COV.PROCESS.BIAS_GYRO =
-      node["covariance"]["process"]["bias_gyro"].as<double>();
-  COV.PROCESS.BIAS_FLAG = 
-      node["covariance"]["process"]["bias_flag"].as<bool>();
-
-  // d. measurement noise:          观测噪声
-  COV.MEASUREMENT.POSE.POSI =
-      node["covariance"]["measurement"]["pose"]["pos"].as<double>();         //   平移  pos
-  COV.MEASUREMENT.POSE.ORI =
-      node["covariance"]["measurement"]["pose"]["ori"].as<double>();           //   旋转  ori  
-
-  // prompt:
-  LOG(INFO) << std::endl
-            << "Error-State Kalman Filter params:" << std::endl
-            << "\tgravity magnitude: " << EARTH.GRAVITY_MAGNITUDE << std::endl
-            << "\tlatitude: " << EARTH.LATITUDE << std::endl
-            << std::endl
-            << "\tprior cov. pos.: " << COV.PRIOR.POSI << std::endl
-            << "\tprior cov. vel.: " << COV.PRIOR.VEL << std::endl
-            << "\tprior cov. ori: " << COV.PRIOR.ORI << std::endl
-            << "\tprior cov. epsilon.: " << COV.PRIOR.EPSILON << std::endl
-            << "\tprior cov. delta.: " << COV.PRIOR.DELTA << std::endl
-            << std::endl
-            << "\tprocess noise gyro.: " << COV.PROCESS.GYRO << std::endl
-            << "\tprocess noise accel.: " << COV.PROCESS.ACCEL << std::endl
-            << std::endl
-            << "\tmeasurement noise pose.: " << std::endl
-            << "\t\tpos: " << COV.MEASUREMENT.POSE.POSI
-            << ", ori.: " << COV.MEASUREMENT.POSE.ORI << std::endl
-            << std::endl
-            << std::endl;
-
-  //
-  // init filter:
-  //
-  // a. earth constants:
-  g_ = Eigen::Vector3d(0.0, 0.0, EARTH.GRAVITY_MAGNITUDE);
-  
-  // b. prior state & covariance:    先验
-  ResetState();             //  状态量清零 （因为状态量是误差形式）
-  ResetCovariance();         //   初始化方差
-
-  // c. process noise:  过程噪声  
-  Q_.block<3, 3>(kIndexNoiseAccel, kIndexNoiseAccel) = COV.PROCESS.ACCEL * Eigen::Matrix3d::Identity();
-  Q_.block<3, 3>(kIndexNoiseGyro, kIndexNoiseGyro) = COV.PROCESS.GYRO * Eigen::Matrix3d::Identity();
-  if (COV.PROCESS.BIAS_FLAG ){
-      std::cout << "use bias flag "  << std::endl;
-      Q_.block<3, 3>(kIndexNoiseBiasAccel, kIndexNoiseBiasAccel) = COV.PROCESS.BIAS_ACCEL * Eigen::Matrix3d::Identity();
-      Q_.block<3, 3>(kIndexNoiseBiasGyro, kIndexNoiseBiasGyro) = COV.PROCESS.BIAS_GYRO * Eigen::Matrix3d::Identity();
-  }
-
-  // d. measurement noise:    观测噪声
-  RPose_.block<3, 3>(0, 0) = COV.MEASUREMENT.POSE.POSI * Eigen::Matrix3d::Identity();
-  RPose_.block<3, 3>(3, 3) = COV.MEASUREMENT.POSE.ORI * Eigen::Matrix3d::Identity();
-
-  // e. process equation:       状态方程  状态转移矩阵   F:15*15    B:15*12
-  F_.block<3, 3>(kIndexErrorPos, kIndexErrorVel) = Eigen::Matrix3d::Identity();
-  F_.block<3, 3>(kIndexErrorOri, kIndexErrorGyro) = -Eigen::Matrix3d::Identity();
-
-  B_.block<3, 3>(kIndexErrorOri, kIndexNoiseGyro) = Eigen::Matrix3d::Identity();
-  B_.block<3, 3>(kIndexErrorAccel, kIndexNoiseBiasAccel) = Eigen::Matrix3d::Identity();
-  B_.block<3, 3>(kIndexErrorGyro, kIndexNoiseBiasGyro) = Eigen::Matrix3d::Identity();
-
-  // f. measurement equation:     观测方程  状态转移矩阵   G:6*15  C:6*6
-  GPose_.block<3, 3>(0, kIndexErrorPos) = Eigen::Matrix3d::Identity();
-  GPose_.block<3, 3>(3, kIndexErrorOri) = Eigen::Matrix3d::Identity();
-  CPose_.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
-  CPose_.block<3, 3>(3, 3) = Eigen::Matrix3d::Identity();
-
-  // init soms:
-  QPose_.block<kDimMeasurementPose, kDimState>(0, 0) = GPose_;
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 }
 
 /**
@@ -250,14 +136,9 @@ void ErrorStateKalmanFilter::Init(const Eigen::Vector3d &vel,
                                    imu_data.angular_velocity.y,
                                    imu_data.angular_velocity.z);
   // covert to navigation frame:    //  把 IMU 的 velocity     angular（flu系）转换到 导航系 下 
-<<<<<<< HEAD
   linear_acc_init  = GetUnbiasedLinearAcc(linear_acc_init,   C_nb);    //输入body系，输出n系
   // linear_acc_init =  linear_acc_init - accl_bias_;            //  body 系下
   angular_vel_init = GetUnbiasedAngularVel(angular_vel_init, C_nb);    //输入body系，输出body系
-=======
-  linear_acc_init = GetUnbiasedLinearAcc(linear_acc_init, C_nb);    //输入body系，输出n系
-  angular_vel_init = GetUnbiasedAngularVel(angular_vel_init, C_nb); //输入body系，输出body系
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
   // init process equation, in case of direct correct step:
   UpdateProcessEquation(linear_acc_init, angular_vel_init);
 
@@ -280,15 +161,10 @@ bool ErrorStateKalmanFilter::Update(const IMUData &imu_data) {                 /
   // TODO: understand ESKF update workflow
   //
   // update IMU buff:
-<<<<<<< HEAD
 
   if (time_ < imu_data.time) {
     // update IMU odometry:
     // std::cout << "——————————————————————————进入Update——————————————————————————————————" << std::endl;
-=======
-  if (time_ < imu_data.time) {
-    // update IMU odometry:
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     Eigen::Vector3d linear_acc_mid;   // 世界系
     Eigen::Vector3d angular_vel_mid;  // b系
     imu_data_buff_.push_back(imu_data);
@@ -321,16 +197,10 @@ bool ErrorStateKalmanFilter::Correct(const IMUData &imu_data,                 //
   static Measurement measurement_;
 
   // get time delta:
-<<<<<<< HEAD
   double time_delta = measurement.time - time_; // 当前帧点云时间 - IMU_synced的时间
   
   if (time_delta > -0.05) {                 //  时间对齐
     // std::cout << "——————————————————————————进入Correct——————————————————————————————————" << std::endl;
-=======
-  double time_delta = measurement.time - time_;
-
-  if (time_delta > -0.05) {                 //  时间对齐
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
     // perform Kalman prediction:
     if (time_ < measurement.time) {
       Update(imu_data);
@@ -348,21 +218,14 @@ bool ErrorStateKalmanFilter::Correct(const IMUData &imu_data,                 //
 
     // reset error state:
     ResetState();                //  清零误差值，方差保留
-<<<<<<< HEAD
     // std::cout << "——————————————————————————完成Correct——————————————————————————————————" << std::endl;
-=======
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 
     return true;
   }
 
   LOG(INFO) << "ESKF Correct: Observation is not synced with filter. Skip, "
-<<<<<<< HEAD
             << (int)measurement.time << " <-- " 
             << (int)time_ << " @ "
-=======
-            << (int)measurement.time << " <-- " << (int)time_ << " @ "
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
             << time_delta << std::endl;
 
   return false;
@@ -654,14 +517,9 @@ void ErrorStateKalmanFilter::UpdateProcessEquation(
     const Eigen::Vector3d &angular_vel_mid) {
   // set linearization point:
   Eigen::Matrix3d C_nb = pose_.block<3, 3>(0, 0);           //   n2b   转换矩阵  b2n
-<<<<<<< HEAD
   Eigen::Vector3d f_b = linear_acc_mid + g_;                //   加速度 n系
   // Eigen::Vector3d f_b = linear_acc_mid;                //   加速度 
   Eigen::Vector3d w_b = angular_vel_mid;                    //   角速度 b系
-=======
-  Eigen::Vector3d f_b = linear_acc_mid + g_;                     //   加速度 n系
-  Eigen::Vector3d w_b = angular_vel_mid;                         //   角速度 b系
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 
   // set process equation:
   SetProcessEquation(C_nb, f_b, w_b);

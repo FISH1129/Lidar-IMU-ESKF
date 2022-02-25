@@ -1,9 +1,5 @@
 # 全局地图
-<<<<<<< HEAD
 # map_path: /home/fbb/multisensor/ESKF_ws/src/lidar_localization/slam_data/map/filtered_map.pcd
-=======
-map_path: /home/fbb/multisensor/ESKF_ws/src/lidar_localization/slam_data/map/filtered_map.pcd
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 global_map_filter: voxel_filter # 选择滑窗地图点云滤波方法，目前支持：voxel_filter、no_filter
 
 # 局部地图
@@ -21,7 +17,6 @@ current_scan_filter: voxel_filter # 选择当前帧点云滤波方法，目前�
 loop_closure_method: scan_context # 选择回环检测方法, 目前支持scan_context
 scan_context_path:  /home/fbb/multisensor/ESKF_ws/src/lidar_localization/slam_data/scan_context   
 
-<<<<<<< HEAD
 
 # !!!观测部分：lidar里程计匹配
 registration_method: NDT   # 选择点云匹配方法，目前支持：NDT NDTMANUAL
@@ -48,10 +43,6 @@ frame_filter: voxel_filter # 选择当前帧点云滤波方法，目前支持：
 key_frame_distance: 2.0 # 关键帧距离
 local_frame_num: 20
 local_map_filter: voxel_filter # 选择滑窗地图点云滤波方法，目前支持：voxel_filter、no_filter
-=======
-# 匹配
-registration_method: NDT   # 选择点云匹配方法，目前支持：NDT 
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 
 # select fusion method for IMU-GNSS-Odo-Mag, available methods are:
 #     1. error_state_kalman_filter
@@ -66,15 +57,9 @@ voxel_filter:
     global_map:
         leaf_size: [0.9, 0.9, 0.9]
     local_map:
-<<<<<<< HEAD
         leaf_size: [0.3, 0.3, 0.3] # 原来是0.6
     frame:
         leaf_size: [0.5, 0.5, 0.5] # 原来是1.3
-=======
-        leaf_size: [0.5, 0.5, 0.5]
-    current_scan:
-        leaf_size: [1.5, 1.5, 1.5]
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 ## b. scan context:
 scan_context:
     # a. ROI definition:
@@ -96,21 +81,12 @@ scan_context:
     #   0.4-0.6 is good choice for using with robust kernel (e.g., Cauchy, DCS) + icp fitness threshold 
     #   if not, recommend 0.1-0.15
     scan_context_distance_thresh: 0.15
-<<<<<<< HEAD
 # ## c. frontend matching
 # NDT:
 #     res : 1.0
 #     step_size : 0.1
 #     trans_eps : 0.01
 #     max_iter : 30
-=======
-## c. frontend matching
-NDT:
-    res : 1.0
-    step_size : 0.1
-    trans_eps : 0.01
-    max_iter : 30
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 ## d. Kalman filter for IMU-lidar-GNSS fusion:
 ## d.1. Error-State Kalman filter for IMU-GNSS-Odo fusion:
 error_state_kalman_filter:
@@ -129,7 +105,6 @@ error_state_kalman_filter:
             epsilon: 1.0e-6
             delta: 1.0e-6
         process:			#过程噪声 Q
-<<<<<<< HEAD
             gyro: 1.0e-7
             accel: 2.5e-6
             bias_accel: 2.5e-6
@@ -139,17 +114,6 @@ error_state_kalman_filter:
             pose:		      
                 pos: 1.0e-5
                 ori: 1.0e-5
-=======
-            gyro: 1.0e-5
-            accel: 2.5e-6
-            bias_accel: 2.5e-3
-            bias_gyro: 1.0e-4
-            bias_flag: false
-        measurement: 			#观测噪声 R
-            pose:		      
-                pos: 1.0e-3
-                ori: 1.0e-4
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
             pos: 1.0e-4
             vel: 2.5e-3
     motion_constraint: 

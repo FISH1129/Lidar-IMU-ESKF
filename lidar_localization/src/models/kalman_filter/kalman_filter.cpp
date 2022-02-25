@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
- * @Description: Kalman Filter utilities.
- * @Author: Ge Yao
- * @Date: 2020-11-12 15:14:07
- */
-
->>>>>>> 124da3fd8c72597742a4c00e8aa60a9369b719e3
 #include "lidar_localization/models/kalman_filter/kalman_filter.hpp"
 
 // SVD for observability analysis:
